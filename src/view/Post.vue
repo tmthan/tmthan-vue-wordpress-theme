@@ -7,12 +7,15 @@
       />
     </div>
     <h1 class="entry-title">
-      {{ post.title.rendered }}
+      <PuSkeleton height="2000px">{{ post.title.rendered }}</PuSkeleton>
     </h1>
     <div class="entry-date">
       {{ postDate }}
     </div>
-    <div v-html="post.content.rendered" class="entry-content"></div>
+    <div
+      v-html="post.content.rendered"
+      class="entry-content"
+    ></div>
     <RelatedPost :posts="post['jetpack-related-posts']" />
     <Comment :comments="comment" :postId="post.id" />
   </div>
@@ -91,7 +94,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.entry {  
+.entry {
   .entry-cover {
     width: 100%;
     display: flex;
@@ -116,13 +119,16 @@ export default {
     max-width: 720px;
     margin: 0 auto;
     padding: 30px;
+    font-size: 20px;
+    line-height: 1.8;
   }
 }
 </style>
 <style lang="scss">
 .entry {
   .entry-content {
-    p {
+    p,
+    figure {
       padding: 15px 0;
       img {
         max-width: 80vw;

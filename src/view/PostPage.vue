@@ -6,8 +6,8 @@
       :page-range="4"
       :force-page="page"
       :click-handler="goToPage"
-      :prev-text="'Prev'"
-      :next-text="'Next'"
+      :prev-text="'Trước'"
+      :next-text="'Sau'"
       :container-class="'pagination'"
       :page-class="'page-item'"
     />
@@ -70,5 +70,26 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
+.pagination {
+  list-style: none;
+  display: flex;  
+  justify-content: center;
+  li {
+    display: none;
+    outline: none;
+    a:focus {
+      outline: none;
+    }
+  }
+  li.page-item {
+    padding: 10px 20px;
+    display: block;
+  }
+  li.page-item.active {
+    background: #c0748b;
+    border-radius: 6px;
+    color: #fff;
+  }
+}
 </style>

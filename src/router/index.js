@@ -5,7 +5,8 @@ import Router from 'vue-router';
 import Home from '../view/Home';
 import PostPage from '../view/PostPage';
 import Post from '../view/Post';
-// import Page from '../components/Page/Page.vue';
+import Category from '../view/Category';
+import CategoryPage from '../view/CategoryPage';
 
 Vue.use(Router);
 
@@ -22,16 +23,21 @@ const router = new Router({
       component: PostPage,
     },
     {
+      path: '/category/:categorySlug',
+      name: 'Category',
+      component: Category,
+    },
+    {
+      path: '/category/:categorySlug/page/:categoryPage',
+      name: 'CategoryPage',
+      component: CategoryPage,
+    },
+    {
       // Assuming you're using the default permalink structure for posts
       path: '/:postSlug',
       name: 'Post',
       component: Post,
     },
-    // {
-    //   path: '/:pageSlug',
-    //   name: 'Page',
-    //   component: Page,
-    // },
   ],
   mode: 'history',
   base: '',

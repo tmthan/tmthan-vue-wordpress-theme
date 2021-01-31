@@ -6,8 +6,8 @@
       :page-range="4"
       :force-page="page"
       :click-handler="goToPage"
-      :prev-text="'Prev'"
-      :next-text="'Next'"
+      :prev-text="'Trước'"
+      :next-text="'Sau'"
       :container-class="'pagination'"
       :page-class="'page-item'"
     />

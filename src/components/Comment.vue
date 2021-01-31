@@ -207,6 +207,8 @@ export default {
     font-size: 16px;
     margin-left: 70px;
     color: #727272;
+    line-height: 1.8;
+    margin-bottom: 20px;
   }
   .comment-reply {
     text-decoration: none;
@@ -245,6 +247,8 @@ export default {
       font-size: 16px;
       margin-left: 70px;
       color: #727272;
+      line-height: 1.8;
+      margin-bottom: 20px;
     }
   }
   #comment-form {

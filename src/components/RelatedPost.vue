@@ -1,9 +1,12 @@
 <template>
     <div class="related-post">
-        <div v-for="(post, index) in posts" :key="post.id" class="post-item">
-            <router-link :to="postLink(post.url)" v-if="index < 3">
+        <div v-for="post in posts" :key="post.id" class="post-item">
+            <router-link :to="postLink(post.url)">
                 <img :src="post.img.src">
                 <h3>{{ post.title }}</h3>
+                <p v-if="'' === post.img.src" class="post-description">
+                    {{ post.excerpt }}
+                </p>
                 <div>{{ post.date }}</div>
             </router-link>
         </div>
@@ -31,6 +34,7 @@ export default {
     overflow: hidden;
     .post-item {
         width: 30%;
+        margin-top: 20px;
         a {
             text-decoration: none;
             color: #181818;
@@ -42,6 +46,11 @@ export default {
             h3 {
                 font-size: 16px;
                 padding: 10px 0;
+                font-weight: 500;
+            }
+            .post-description {
+                line-height: 1.8;
+                margin-bottom: 10px;
             }
         }
     }
