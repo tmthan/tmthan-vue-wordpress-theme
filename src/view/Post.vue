@@ -6,9 +6,9 @@
         v-if="post && post.jetpack_featured_media_url"
       />
     </div>
-    <h1 class="entry-title">
-      <PuSkeleton height="2000px">{{ post.title.rendered }}</PuSkeleton>
+    <h1 class="entry-title" v-html="post.title.rendered">      
     </h1>
+    <PuSkeleton height="2000px" v-if="!post"/>
     <div class="entry-date">
       {{ postDate }}
     </div>

@@ -7,6 +7,7 @@ import PostPage from '../view/PostPage';
 import Post from '../view/Post';
 import Category from '../view/Category';
 import CategoryPage from '../view/CategoryPage';
+import Search from '../view/Search';
 
 Vue.use(Router);
 
@@ -32,12 +33,18 @@ const router = new Router({
       name: 'CategoryPage',
       component: CategoryPage,
     },
+    
+    {
+      path: '/search',
+      name: 'Search',
+      component: Search,
+    },
     {
       // Assuming you're using the default permalink structure for posts
       path: '/:postSlug',
       name: 'Post',
       component: Post,
-    },
+    }
   ],
   mode: 'history',
   base: '',
