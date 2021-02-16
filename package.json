@@ -5,8 +5,9 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "start": "vue-cli-service serve --watch",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "dev": "webpack-dev-server --env=dev",
+    "build": "webpack --env=prod"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -29,7 +30,10 @@
     "eslint-plugin-vue": "^6.2.2",
     "node-sass": "^5.0.0",
     "sass-loader": "^10.1.1",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",    
+    "webpack": "^4.29.3",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.1.14"
   },
   "eslintConfig": {
     "root": true,
