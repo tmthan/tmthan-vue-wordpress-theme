@@ -1,15 +1,15 @@
 <template>
   <div class="entry">
+    <Snipper v-if="!post.content.rendered.length"/>
     <div class="entry-cover">
       <img
         :src="post.jetpack_featured_media_url"
         v-if="post && post.jetpack_featured_media_url"
       />
     </div>
-    <h1 class="entry-title" v-html="post.title.rendered">      
+    <h1 class="entry-title" v-if="post && post.content.rendered.length" v-html="post.title.rendered">      
     </h1>
-    <PuSkeleton height="2000px" v-if="!post"/>
-    <div class="entry-date">
+    <div class="entry-date" v-if="post && post.content.rendered.length">
       {{ postDate }}
     </div>
     <div
@@ -17,18 +17,21 @@
       class="entry-content"
     ></div>
     <RelatedPost :posts="post['jetpack-related-posts']" />
-    <Comment :comments="comment" :postId="post.id" />
+    <Comment v-if="post && post.content.rendered.length" :comments="comment" :postId="post.id" />
   </div>
 </template>
 <script>
 import axios from "axios";
 import Comment from "../components/Comment";
 import RelatedPost from "../components/RelatedPost";
+import Snipper from "../components/Spinner";
+
 export default {
   name: "Post",
   components: {
     Comment,
     RelatedPost,
+    Snipper,
   },
   data() {
     return {

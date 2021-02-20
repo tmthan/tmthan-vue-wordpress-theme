@@ -1,6 +1,6 @@
 <template>
 <div>  
-    <PuSkeleton height="1000px" v-if="!postList"/>    
+    <Spinner v-if="!postList"/>
   <ul
     class="post-list"
     v-masonry
@@ -18,9 +18,7 @@
         <div class="post-thumbnail" v-if="post.jetpack_featured_media_url">
           <img :src="post.jetpack_featured_media_url" />
         </div>
-        <h1 class="post-title">
-          {{ post.title.rendered }}
-        </h1>
+        <h1 class="post-title" v-html="post.title.rendered"></h1>
         <div v-html="post.excerpt.rendered" class="post-description"></div>
       </router-link>
     </li>
@@ -28,8 +26,12 @@
 </div>
 </template>
 <script>
+import Spinner from "./Spinner";
 export default {
   name: "PostList",
+  components: {
+    Spinner,
+  },
   props: {
     postList: Array,
   },

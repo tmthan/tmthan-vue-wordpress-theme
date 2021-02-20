@@ -3,11 +3,11 @@
     <div class="search-info">
       <h1 class="search-name">
         Kết quả tìm kiếm:
-        <PuSkeleton>{{ keyword }}</PuSkeleton>
+        {{ keyword }}
       </h1>
       {{ posts }}
     </div>
-    <PuSkeleton height="1000px" v-if="!posts.length" />
+    <Spinner height="1000px" v-if="!posts.length" />
     <PostList :postList="posts" />
     <Paginate
       :page-count="totalPage"
@@ -25,12 +25,14 @@
 import axios from "axios";
 import PostList from "../components/PostList";
 import Paginate from "vuejs-paginate";
+import Spinner from "../components/Spinner";
 
 export default {
   name: "Search",
   components: {
     PostList,
     Paginate,
+    Spinner,
   },
   data() {
     return {

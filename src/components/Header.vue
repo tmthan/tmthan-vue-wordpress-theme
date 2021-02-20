@@ -53,6 +53,11 @@ export default {
       openMenu: false,
     };
   },
+  watch: {
+    $route() {
+      this.openMenu = false;
+    }
+  },
   methods: {
     toggleMenu() {
       this.openMenu = !this.openMenu;

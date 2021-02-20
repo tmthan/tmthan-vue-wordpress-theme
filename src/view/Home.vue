@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Snipper v-if="!postList"/>
     <PostList :postList="postList" />
     <Paginate
       :page-count="totalPage"
@@ -10,6 +11,7 @@
       :next-text="'Sau'"
       :container-class="'pagination'"
       :page-class="'page-item'"
+      v-if="postList"
     />
   </div>
 </template>
@@ -17,12 +19,14 @@
 import PostList from "../components/PostList";
 import axios from "axios";
 import Paginate from "vuejs-paginate";
+import Snipper from "../components/Spinner";
 
 export default {
   name: "Home",
   components: {
     PostList,
     Paginate,
+    Snipper,
   },
   data() {
     return {

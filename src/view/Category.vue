@@ -2,13 +2,13 @@
   <div class="category-page">
     <div class="category-info">
       <h1 class="category-name">
-        <PuSkeleton>{{ category.name }}</PuSkeleton>
+        {{ category.name }}
       </h1>
       <p class="category-description">
-        <PuSkeleton>{{ category.description }}</PuSkeleton>
+        {{ category.description }}
       </p>
     </div>
-    <PuSkeleton height="1000px" v-if="!posts.length" />
+    <Spinner v-if="!posts.length" />
     <PostList :postList="posts" />
     <Paginate
       :page-count="totalPage"
@@ -19,6 +19,7 @@
       :next-text="'Sau'"
       :container-class="'pagination'"
       :page-class="'page-item'"
+      v-if="posts.length"
     />
   </div>
 </template>
@@ -26,6 +27,7 @@
 import axios from "axios";
 import PostList from "../components/PostList";
 import Paginate from "vuejs-paginate";
+import Spinner from "../components/Spinner";
 
 export default {
   name: "Category",
@@ -41,6 +43,7 @@ export default {
   components: {
     PostList,
     Paginate,
+    Spinner,
   },
   watch: {
     async $route() {
