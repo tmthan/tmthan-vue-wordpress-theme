@@ -7,6 +7,9 @@
         </h1>
         <p class="site-description">Em ngày nào thật hiền</p>
       </div>
+      <!-- <form class="search" @submit="search">
+        <input type="text" class="input-search" placeholder="Tìm kiếm..." v-model="searchKeyword"/>
+      </form> -->
       <div class="site-navigation">
         <div id="toggle-menu" :class="{ open: openMenu }" @click="toggleMenu()">
           <span></span>
@@ -51,17 +54,22 @@ export default {
   data() {
     return {
       openMenu: false,
+      searchKeyword: '',
     };
   },
   watch: {
     $route() {
       this.openMenu = false;
-    }
+    },
   },
   methods: {
     toggleMenu() {
       this.openMenu = !this.openMenu;
     },
+    search(event) {     
+      event.preventDefault();
+      this.$router.push(`/search?q=${this.searchKeyword}`)
+    }
   },
 };
 </script>
@@ -100,6 +108,17 @@ export default {
         margin-top: 10px;
         color: #828089;
         font-size: 14px;
+      }
+    }
+    .search {
+      position: absolute;
+      right: 60px;
+      .input-search {
+        width: 100px;
+        border-radius: 20px;
+        border: 1px solid #999;
+        padding: 6px;
+        outline: none;
       }
     }
     .site-navigation {
@@ -171,9 +190,9 @@ export default {
         }
       }
       .nav {
-        display: none;   
-        animation-duration: 0.3s;  
-        animation-name: fadeOutUp;   
+        display: none;
+        animation-duration: 0.3s;
+        animation-name: fadeOutUp;
         &.show {
           display: block;
           position: absolute;
@@ -186,18 +205,18 @@ export default {
           animation-name: fadeInDown;
           animation-duration: 0.3s;
           .menu {
-              list-style: none;
-              .menu-item {
-                  padding: 10px;
-                  border-top: 1px solid #efeff0;
-                  a {
-                      color: #181818;
-                      text-decoration: none;                      
-                  }
-                  &:hover > a {
-                      color: #a8a8ad;
-                  }
+            list-style: none;
+            .menu-item {
+              padding: 10px;
+              border-top: 1px solid #efeff0;
+              a {
+                color: #181818;
+                text-decoration: none;
               }
+              &:hover > a {
+                color: #a8a8ad;
+              }
+            }
           }
         }
       }
@@ -242,7 +261,7 @@ export default {
     }
   }
 }
-  
+
 @keyframes fadeInDown {
   from {
     opacity: 0;

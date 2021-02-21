@@ -1,23 +1,27 @@
 <template>
   <div class="entry">
-    <Snipper v-if="!post.content.rendered.length"/>
+    <Snipper v-if="!post.content.rendered.length" />
     <div class="entry-cover">
       <img
         :src="post.jetpack_featured_media_url"
         v-if="post && post.jetpack_featured_media_url"
       />
     </div>
-    <h1 class="entry-title" v-if="post && post.content.rendered.length" v-html="post.title.rendered">      
-    </h1>
+    <h1
+      class="entry-title"
+      v-if="post && post.content.rendered.length"
+      v-html="post.title.rendered"
+    ></h1>
     <div class="entry-date" v-if="post && post.content.rendered.length">
       {{ postDate }}
     </div>
-    <div
-      v-html="post.content.rendered"
-      class="entry-content"
-    ></div>
+    <div v-html="post.content.rendered" class="entry-content"></div>
     <RelatedPost :posts="post['jetpack-related-posts']" />
-    <Comment v-if="post && post.content.rendered.length" :comments="comment" :postId="post.id" />
+    <Comment
+      v-if="post && post.content.rendered.length"
+      :comments="comment"
+      :postId="post.id"
+    />
   </div>
 </template>
 <script>
@@ -100,6 +104,7 @@ export default {
 .entry {
   .entry-cover {
     width: 100%;
+    height: auto;
     display: flex;
     justify-content: center;
     img {
@@ -121,7 +126,7 @@ export default {
   .entry-content {
     max-width: 720px;
     margin: 0 auto;
-    padding: 30px;
+    padding: 30px 15px;
     font-size: 20px;
     line-height: 1.8;
   }
@@ -131,14 +136,40 @@ export default {
 .entry {
   .entry-content {
     p,
+    div,
     figure {
       padding: 15px 0;
+      width: 100%;
       img {
-        max-width: 80vw;
+        max-width: calc(100vw - 30px);
         height: auto;
-        position: relative;
-        left: 50%;
-        transform: translateX(-50%);
+      }
+      iframe {
+        max-width: calc(100vw - 30px);
+      }
+    }
+  }
+}
+@media only screen and (min-width: 768px) {
+  .entry {
+    .entry-content {
+      p,
+      div,
+      figure {
+        padding: 15px 0;
+        width: 100%;
+        img {
+          max-width: 80vw;
+          height: auto;
+          position: relative;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+        iframe {
+          position: relative;
+          left: 50%;
+          transform: translateX(-50%);
+        }
       }
     }
   }

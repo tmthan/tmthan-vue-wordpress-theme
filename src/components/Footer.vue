@@ -12,7 +12,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .footer {
-    width: 100%;
     padding: 30px;
     display: flex;
     justify-content: center;

@@ -33,7 +33,7 @@ export default {
     flex-wrap: wrap;
     overflow: hidden;
     .post-item {
-        width: 30%;
+        width: calc(50% - 20px);
         margin-top: 20px;
         a {
             text-decoration: none;

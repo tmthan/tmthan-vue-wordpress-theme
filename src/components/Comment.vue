@@ -7,10 +7,7 @@
             <img :src="comment.author_avatar_urls['96']" class="avatar" />
             <div class="author-info">
               <div class="author-name">
-                <a
-                  v-if="comment.author_url"
-                  :href="comment.author_url"
-                >
+                <a v-if="comment.author_url" :href="comment.author_url">
                   {{ comment.author_name }}
                 </a>
                 <template v-else> {{ comment.author_name }}</template>
@@ -98,6 +95,11 @@
       <button class="comment-button" @click="postCommentSubmit()">
         Gửi bình luận
       </button>
+      <label class="switch">
+        <input type="checkbox" v-model="rememberInfo" />
+        <span class="slider round"></span>
+      </label>
+      Ghi nhớ thông tin cho lần bình luận kế tiếp
       <div class="comment-wait" v-show="disableComment">
         Đang gửi bình luận. Vui lòng chờ xíu nhé
       </div>
@@ -123,7 +125,30 @@ export default {
         content: "",
       },
       disableComment: false,
+      rememberInfo: false,
     };
+  },
+  mounted() {
+    this.rememberInfo = localStorage.rememberInfo || false;
+    if (this.rememberInfo) {
+      if (localStorage.commentInfo) {
+        this.postComment.name = localStorage.commentInfo.name;
+        this.postComment.email = localStorage.commentInfo.email;
+        this.postComment.website = localStorage.commentInfo.website;
+      }
+    }
+  },
+  watch: {
+    postComment() {
+      if (this.rememberInfo) {
+        const commentInfo = {
+          name: this.postComment.name || "",
+          email: this.postComment.email || "",
+          website: this.postComment.website || "",
+        }
+        localStorage.commentInfo = commentInfo;
+      }
+    }
   },
   methods: {
     replyComment(parentId, parentContent) {
@@ -131,7 +156,8 @@ export default {
       this.postComment.parentContent = parentContent;
     },
     async postCommentSubmit() {
-      this.disableComment = true;
+     if (this.postComment.name && this.postComment.email) {
+        this.disableComment = true;
       const rs = await axios.post(
         `https://tmthan.com/wp-json/wp/v2/comments?author_name=${
           this.postComment.name
@@ -152,6 +178,9 @@ export default {
           content: "",
         };
       }
+     } else {
+       alert("Vui lòng điền đầy đủ tên và email!");
+     }
     },
     getAuthorUrl() {
       if ("" !== this.postComment.url) {
@@ -165,8 +194,10 @@ export default {
     },
     formatTime(time) {
       const timeObj = new Date(time);
-      return `${timeObj.getDate()}-${timeObj.getMonth() + 1}-${timeObj.getFullYear()} ${timeObj.getHours()}:${timeObj.getMinutes()}`;
-    }
+      return `${timeObj.getDate()}-${
+        timeObj.getMonth() + 1
+      }-${timeObj.getFullYear()} ${timeObj.getHours()}:${timeObj.getMinutes()}`;
+    },
   },
 };
 </script>
@@ -254,7 +285,7 @@ export default {
   #comment-form {
     position: relative;
     .comment-input {
-      width: 95%;
+      width: calc(100% - 20px);
       padding: 10px;
       margin: 10px 0;
       background: #eee;
@@ -285,5 +316,67 @@ export default {
       left: 0;
     }
   }
+}
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
 }
 </style>
