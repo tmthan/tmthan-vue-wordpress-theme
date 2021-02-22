@@ -7,7 +7,7 @@ function remove_redirects() {
 	add_rewrite_rule( '^/(.+)/?', 'index.php', 'top' );
 }
 add_action( 'init', 'remove_redirects' );
-
+add_theme_support( 'title-tag' );
 // Load scripts
 // function load_vue_scripts() {
 //     wp_enqueue_style('vue_wordpress.css', get_template_directory_uri() . '/dist/vue-wordpress.css');
