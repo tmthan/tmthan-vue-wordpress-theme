@@ -8,7 +8,6 @@
         {{ category.description }}
       </p>
     </div>
-    <Spinner v-if="!posts.length" />
     <PostList :postList="posts" />
     <Paginate
       :page-count="totalPage"
@@ -19,7 +18,6 @@
       :next-text="'Sau'"
       :container-class="'pagination'"
       :page-class="'page-item'"
-      v-if="posts.length"
     />
   </div>
 </template>
@@ -27,7 +25,6 @@
 import axios from "axios";
 import PostList from "../components/PostList";
 import Paginate from "vuejs-paginate";
-import Spinner from "../components/Spinner";
 
 export default {
   name: "CategoryPage",
@@ -43,7 +40,6 @@ export default {
   components: {
     PostList,
     Paginate,
-    Spinner,
   },
   watch: {
     async $route() {
@@ -73,16 +69,18 @@ export default {
       return category.data[0];
     },
     async getPost(page) {
-      const posts = await axios.get("https://tmthan.com/wp-json/wp/v2/posts", {
-        params: {
-          categories: this.category.id,
-          page: this.page,
-          per_page: this.perPage,
-        },
-      });
-      this.totalPage = this.roundTotalPage(posts.headers["x-wp-total"]);
-      this.page = page;
-      return posts.data;
+      axios
+        .get(
+          `https://tmthan.com/wp-json/wp/v2/posts?page=${page}&per_page=${this.perPage}&categories=${this.category.id}`
+        )
+        .then((response) => {          
+          this.totalPage = this.roundTotalPage(response.headers["x-wp-total"]);
+          this.page = page;
+          this.posts = response.data;
+        })
+        .catch((e) => {
+          throw e;
+        });
     },
     async goToPage(pageNum) {
       this.$router.push(

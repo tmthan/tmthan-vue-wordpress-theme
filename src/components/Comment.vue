@@ -2,7 +2,7 @@
   <div class="comment">
     <div v-for="comment in comments" :key="comment.id">
       <template v-if="0 == comment.parent">
-        <div class="comment-item">
+        <div class="comment-item" :id="`comment_${comment.id}`">
           <div class="comment-author">
             <img :src="comment.author_avatar_urls['96']" class="avatar" />
             <div class="author-info">
@@ -31,6 +31,7 @@
           v-for="childComment in comments"
           :key="childComment.id"
           class="comment-child"
+          :id="`comment_${childComment.id}`"
         >
           <template v-if="childComment.parent === comment.id">
             <div class="comment-author">
@@ -81,7 +82,7 @@
       />
       <br />
       <input
-        v-model="postComment.url"
+        v-model="postComment.website"
         placeholder="Trang web"
         class="comment-input"
       />
@@ -92,15 +93,19 @@
         class="comment-input"
       ></textarea>
       <br />
+      <div class="remember-info">
+        <input type="checkbox" id="switch" v-model="rememberInfo" /><label
+          for="switch"
+          >Toggle</label
+        >
+        Ghi nhớ thông tin cho lần bình luận kế tiếp
+      </div>
+      <br />
       <button class="comment-button" @click="postCommentSubmit()">
         Gửi bình luận
       </button>
-      <label class="switch">
-        <input type="checkbox" v-model="rememberInfo" />
-        <span class="slider round"></span>
-      </label>
-      Ghi nhớ thông tin cho lần bình luận kế tiếp
       <div class="comment-wait" v-show="disableComment">
+        <Snipper/>
         Đang gửi bình luận. Vui lòng chờ xíu nhé
       </div>
     </div>
@@ -108,8 +113,13 @@
 </template>
 <script>
 import axios from "axios";
+import Snipper from './Spinner';
+
 export default {
   name: "Comment",
+  components: {
+    Snipper
+  },
   props: {
     comments: Array,
     postId: Number,
@@ -121,34 +131,37 @@ export default {
         parentContent: {},
         name: "",
         email: "",
-        url: "",
+        website: "",
         content: "",
       },
       disableComment: false,
       rememberInfo: false,
     };
   },
-  mounted() {
-    this.rememberInfo = localStorage.rememberInfo || false;
-    if (this.rememberInfo) {
-      if (localStorage.commentInfo) {
-        this.postComment.name = localStorage.commentInfo.name;
-        this.postComment.email = localStorage.commentInfo.email;
-        this.postComment.website = localStorage.commentInfo.website;
-      }
+  created() {
+    const commentInfoStorage = localStorage.getItem("commentInfo")
+      ? JSON.parse(localStorage.getItem("commentInfo"))
+      : false;
+    if (commentInfoStorage) {
+      this.rememberInfo = commentInfoStorage.rememberInfo;
+      this.postComment.name = commentInfoStorage.name;
+      this.postComment.email = commentInfoStorage.email;
+      this.postComment.website = commentInfoStorage.website;
     }
   },
   watch: {
-    postComment() {
-      if (this.rememberInfo) {
-        const commentInfo = {
-          name: this.postComment.name || "",
-          email: this.postComment.email || "",
-          website: this.postComment.website || "",
-        }
-        localStorage.commentInfo = commentInfo;
-      }
-    }
+    ["postComment.name"]() {
+      this.rememberInfoComment();
+    },
+    ["postComment.email"]() {
+      this.rememberInfoComment();
+    },
+    ["postComment.website"]() {
+      this.rememberInfoComment();
+    },
+    rememberInfo() {
+      this.rememberInfoComment();
+    },
   },
   methods: {
     replyComment(parentId, parentContent) {
@@ -156,35 +169,45 @@ export default {
       this.postComment.parentContent = parentContent;
     },
     async postCommentSubmit() {
-     if (this.postComment.name && this.postComment.email) {
+      if (this.postComment.name && this.postComment.email) {
         this.disableComment = true;
-      const rs = await axios.post(
-        `https://tmthan.com/wp-json/wp/v2/comments?author_name=${
-          this.postComment.name
-        }&author_email=${this.postComment.email}&content=${
-          this.postComment.content
-        }&post=${this.postId}${this.getAuthorUrl()}${this.getParentCommentId()}`
-      );
-      if (rs) {
-        this.disableComment = false;
-        this.comments.push(rs.data);
-        // reset form
-        this.postComment = {
-          parentId: 0,
-          parentContent: {},
-          name: "",
-          email: "",
-          url: "",
-          content: "",
-        };
+        const rs = await axios.post(
+          `https://tmthan.com/wp-json/wp/v2/comments?author_name=${
+            this.postComment.name
+          }&author_email=${this.postComment.email}&content=${
+            this.postComment.content
+          }&post=${
+            this.postId
+          }${this.getAuthorUrl()}${this.getParentCommentId()}`
+        );
+        if (rs) {
+          this.disableComment = false;
+          this.comments.push(rs.data);
+          setTimeout(() => {
+            const thisCommentElement = document.getElementById(
+              `comment_${rs.data.id}`
+            );
+            // thisCommentElement.scrollIntoView();
+            window.scrollTo(0, thisCommentElement.offsetTop + 100);
+            setTimeout(() => {
+              thisCommentElement.classList.add("rubberBand");
+            }, 1000);
+          }, 1000);
+          // reset form
+          this.postComment = {
+            ...this.postComment,
+            parentId: 0,
+            parentContent: {},
+            content: "",
+          };
+        }
+      } else {
+        alert("Vui lòng điền đầy đủ tên và email!");
       }
-     } else {
-       alert("Vui lòng điền đầy đủ tên và email!");
-     }
     },
     getAuthorUrl() {
-      if ("" !== this.postComment.url) {
-        return `&author_url=${this.postComment.url}`;
+      if ("" !== this.postComment.website) {
+        return `&author_url=${this.postComment.website}`;
       } else return "";
     },
     getParentCommentId() {
@@ -197,6 +220,21 @@ export default {
       return `${timeObj.getDate()}-${
         timeObj.getMonth() + 1
       }-${timeObj.getFullYear()} ${timeObj.getHours()}:${timeObj.getMinutes()}`;
+    },
+    rememberInfoComment() {
+      if (this.rememberInfo) {
+        const commentInfo = {
+          rememberInfo: this.rememberInfo,
+          name: this.postComment.name || "",
+          email: this.postComment.email || "",
+          website: this.postComment.website || "",
+        };
+        localStorage.setItem("commentInfo", JSON.stringify(commentInfo));
+      } else {
+        if (localStorage.getItem("commentInfo")) {
+          localStorage.removeItem("commentInfo");
+        }
+      }
     },
   },
 };
@@ -293,6 +331,52 @@ export default {
       border-radius: 10px;
       outline: none;
     }
+    .remember-info {
+      display: flex;
+      align-items: center;
+      input[type="checkbox"] {
+        height: 0;
+        width: 0;
+        visibility: hidden;
+      }
+
+      label {
+        cursor: pointer;
+        text-indent: -9999px;
+        width: 40px;
+        height: 20px;
+        background: grey;
+        display: block;
+        border-radius: 100px;
+        position: relative;
+        margin-right: 10px;
+      }
+
+      label:after {
+        content: "";
+        position: absolute;
+        top: 1px;
+        left: 1px;
+        width: 18px;
+        height: 18px;
+        background: #fff;
+        border-radius: 90px;
+        transition: 0.3s;
+      }
+
+      input:checked + label {
+        background: #bada55;
+      }
+
+      input:checked + label:after {
+        left: calc(100% - 1px);
+        transform: translateX(-100%);
+      }
+
+      label:active:after {
+        width: 40px;
+      }
+    }
     .comment-button {
       border: none;
       border-radius: 8px;
@@ -317,66 +401,38 @@ export default {
     }
   }
 }
-/* The switch - the box around the slider */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
+@keyframes rubberBand {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+
+  30% {
+    transform: scale3d(1.25, 0.75, 1);
+  }
+
+  40% {
+    transform: scale3d(0.75, 1.25, 1);
+  }
+
+  50% {
+    transform: scale3d(1.15, 0.85, 1);
+  }
+
+  65% {
+    transform: scale3d(0.95, 1.05, 1);
+  }
+
+  75% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+
+  to {
+    transform: scale3d(1, 1, 1);
+  }
 }
 
-/* Hide default HTML checkbox */
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-/* The slider */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-input:checked + .slider {
-  background-color: #2196F3;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
+.rubberBand {
+  animation-name: rubberBand;
+  animation-duration: 1s;
 }
 </style>

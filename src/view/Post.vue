@@ -92,6 +92,7 @@ export default {
 <style lang="scss" scoped>
 .entry {
     .entry-cover {
+        text-align: center;
         img {
             height: auto;
             max-width: 100%;

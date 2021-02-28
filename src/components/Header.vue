@@ -1,5 +1,5 @@
 <template>
-  <header class="nav-bar">
+  <header class="nav-bar" id="nav_bar" :class="{hide: hideMenu}">
     <div class="container">
       <div class="site-brand">
         <h1 class="site-name">
@@ -7,9 +7,24 @@
         </h1>
         <p class="site-description">Em ngày nào thật hiền</p>
       </div>
-      <!-- <form class="search" @submit="search">
-        <input type="text" class="input-search" placeholder="Tìm kiếm..." v-model="searchKeyword"/>
-      </form> -->
+      <div class="search-icon">
+        <router-link to="/search">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            style="width: 30px; height: 30px; margin: 0 10px"
+            viewBox="0 0 24 24"
+          >
+            <g data-name="Layer 2">
+              <g data-name="search">
+                <rect width="24" height="24" opacity="0" />
+                <path
+                  d="M20.71 19.29l-3.4-3.39A7.92 7.92 0 0 0 19 11a8 8 0 1 0-8 8 7.92 7.92 0 0 0 4.9-1.69l3.39 3.4a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42zM5 11a6 6 0 1 1 6 6 6 6 0 0 1-6-6z"
+                />
+              </g>
+            </g>
+          </svg>
+        </router-link>
+      </div>
       <div class="site-navigation">
         <div id="toggle-menu" :class="{ open: openMenu }" @click="toggleMenu()">
           <span></span>
@@ -54,7 +69,8 @@ export default {
   data() {
     return {
       openMenu: false,
-      searchKeyword: '',
+      searchKeyword: "",
+      hideMenu: false,
     };
   },
   watch: {
@@ -62,14 +78,27 @@ export default {
       this.openMenu = false;
     },
   },
+  mounted() {
+    let lastScroll = 0;
+    window.addEventListener("scroll", () => {
+      let scroll = window.scrollY;
+      if (lastScroll - scroll > 0) {
+        this.hideMenu = false;
+        lastScroll = scroll;
+      } else {
+        this.hideMenu = true;
+        lastScroll = scroll;
+      }
+    });
+  },
   methods: {
     toggleMenu() {
       this.openMenu = !this.openMenu;
     },
-    search(event) {     
+    search(event) {
       event.preventDefault();
-      this.$router.push(`/search?q=${this.searchKeyword}`)
-    }
+      this.$router.push(`/search?q=${this.searchKeyword}`);
+    },
   },
 };
 </script>
@@ -79,6 +108,11 @@ export default {
   position: fixed;
   background: #fff;
   z-index: 1;
+  transition: all 0.3s linear;
+  top: 0px;
+  &.hide {
+    top: -90px;
+  }
   .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -86,6 +120,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     padding: 15px;
+    position: relative;
     .site-brand {
       .site-name {
         a {
@@ -110,16 +145,9 @@ export default {
         font-size: 14px;
       }
     }
-    .search {
+    .search-icon {
       position: absolute;
-      right: 60px;
-      .input-search {
-        width: 100px;
-        border-radius: 20px;
-        border: 1px solid #999;
-        padding: 6px;
-        outline: none;
-      }
+      right: 50px;
     }
     .site-navigation {
       #toggle-menu {
