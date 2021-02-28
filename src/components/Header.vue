@@ -106,7 +106,8 @@ export default {
 .nav-bar {
   width: calc(100vw + 1px);
   position: fixed;
-  background: #fff;
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: saturate(180%) blur(20px);
   z-index: 1;
   transition: all 0.3s linear;
   top: 0px;
