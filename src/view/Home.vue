@@ -37,6 +37,7 @@ export default {
     };
   },
   async created() {
+    document.title = 'thân - Em ngày nào thật hiền';
     this.postList = await this.getPostList(this.page);
   },
   methods: {

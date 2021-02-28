@@ -74,6 +74,7 @@ export default {
   methods: {
     async init() {
       this.post = await this.getPost();
+      document.title = this.post.title.rendered.replace("&#8220;", '"').replace("&#8221;", '"').replace("&#38;", '&') + ' thân';
       if (this.post) {
         this.comment = await this.getComment(this.post.id);
       }

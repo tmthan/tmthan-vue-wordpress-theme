@@ -56,6 +56,7 @@ export default {
   methods: {
     async init() {
       this.category = await this.getCategory();
+      document.title = `${this.category.name} - thân`;
       if (this.category) {
         this.posts = await this.getPost(this.page);
       }

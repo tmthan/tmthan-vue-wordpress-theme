@@ -54,6 +54,7 @@ export default {
   async created() {
     this.page = Number(this.$route.params.categoryPage);
     this.category = await this.getCategory();
+    document.title = `${this.category.name} - thân`;
     if (this.category) {
       this.posts = await this.getPost(this.page);
     }
