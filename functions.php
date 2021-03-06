@@ -15,3 +15,7 @@ add_theme_support( 'title-tag' );
 // }
 // add_action( 'wp_enqueue_scripts', 'load_vue_scripts', 100 );
 add_filter( 'rest_allow_anonymous_comments', '__return_true' );
+function add_post_thumbnails() {
+    add_theme_support( 'post-thumbnails' );
+}
+add_action( 'after_setup_theme', 'add_post_thumbnails' );
