@@ -1,6 +1,7 @@
 <template>
   <div>
-    <Snipper v-if="!postList"/>
+    <Snipper v-if="!postList" />
+    <Canvas />
     <PostList :postList="postList" />
     <Paginate
       :page-count="totalPage"
@@ -20,6 +21,8 @@ import PostList from "../components/PostList";
 import axios from "axios";
 import Paginate from "vuejs-paginate";
 import Snipper from "../components/Spinner";
+import Canvas from "../components/Canvas";
+import { config } from "../env/config";
 
 export default {
   name: "Home",
@@ -27,6 +30,7 @@ export default {
     PostList,
     Paginate,
     Snipper,
+    Canvas,
   },
   data() {
     return {
@@ -37,14 +41,14 @@ export default {
     };
   },
   async created() {
-    document.title = 'thân - Em ngày nào thật hiền';
+    document.title = "thân - Em ngày nào thật hiền";
     this.postList = await this.getPostList(this.page);
   },
   methods: {
     async getPostList(page) {
       axios
         .get(
-          `https://tmthan.com/wp-json/wp/v2/posts?page=${page}&per_page=${this.perPage}`
+          `${config}/posts?page=${page}&per_page=${this.perPage}`
         )
         .then((response) => {
           this.postList = response.data;

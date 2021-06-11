@@ -28,6 +28,7 @@ import axios from "axios";
 import PostList from "../components/PostList";
 import Paginate from "vuejs-paginate";
 import Spinner from "../components/Spinner";
+import { config } from "../env/config";
 
 export default {
   name: "Category",
@@ -63,7 +64,7 @@ export default {
     },
     async getCategory() {
       const category = await axios.get(
-        "https://tmthan.com/wp-json/wp/v2/categories",
+        `${config}/categories`,
         {
           params: {
             slug: this.$route.params.categorySlug,
@@ -73,7 +74,7 @@ export default {
       return category.data[0];
     },
     async getPost(page) {
-      const posts = await axios.get("https://tmthan.com/wp-json/wp/v2/posts", {
+      const posts = await axios.get(`${config}/posts`, {
         params: {
           categories: this.category.id,
           page: this.page,

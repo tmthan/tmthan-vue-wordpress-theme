@@ -30,6 +30,7 @@
 </template>
 <script>
 import axios from "axios";
+import { config } from '../env/config';
 
 export default {
   name: "Search",
@@ -45,38 +46,9 @@ export default {
   },
   watch: {},
   methods: {
-    // async init() {
-    //   if (this.$route.query && this.$route.query.page)
-    //     this.page = this.$route.query.page;
-    //   if (this.$route.query && this.$route.query.q) {
-    //     this.keyword = this.$route.query.q;
-    //     this.posts = await this.searchPost();
-    //   }
-    // },
-    // async searchPost() {
-    //   const posts = await axios.get("https://tmthan.com/wp-json/wp/v2/search", {
-    //     params: {
-    //       search: this.keyword,
-    //       page: this.page,
-    //       per_page: this.perPage,
-    //     },
-    //   });
-    //   this.totalPage = this.roundTotalPage(posts.headers["x-wp-total"]);
-    //   return posts.data;
-    // },
-    // async goToPage(pageNum) {
-    //   this.$router.push(`/search/q=${this.keyword}/page/${pageNum}`);
-    // },
-    // roundTotalPage(total) {
-    //   if (0 == total % this.perPage) {
-    //     return total / this.perPage;
-    //   } else {
-    //     return Math.round(total / this.perPage) + 1;
-    //   }
-    // },
     async search(event) {
       event.preventDefault();
-      const posts = await axios.get("https://tmthan.com/wp-json/wp/v2/search", {
+      const posts = await axios.get(`${config}/search`, {
         params: {
           search: this.keyword,
         },

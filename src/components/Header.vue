@@ -269,6 +269,8 @@ export default {
             right: auto;
             top: auto;
             animation-name: fadeInRight;
+            background: transparent;
+            margin-right: 40px;
             .menu {
               height: 100%;
               display: flex;

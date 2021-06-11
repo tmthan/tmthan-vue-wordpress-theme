@@ -25,6 +25,7 @@
 import axios from "axios";
 import PostList from "../components/PostList";
 import Paginate from "vuejs-paginate";
+import { config } from '../env/config';
 
 export default {
   name: "CategoryPage",
@@ -59,7 +60,7 @@ export default {
   methods: {
     async getCategory() {
       const category = await axios.get(
-        "https://tmthan.com/wp-json/wp/v2/categories",
+        `${config}/categories`,
         {
           params: {
             slug: this.$route.params.categorySlug,
@@ -71,7 +72,7 @@ export default {
     async getPost(page) {
       axios
         .get(
-          `https://tmthan.com/wp-json/wp/v2/posts?page=${page}&per_page=${this.perPage}&categories=${this.category.id}`
+          `${config}/posts?page=${page}&per_page=${this.perPage}&categories=${this.category.id}`
         )
         .then((response) => {          
           this.totalPage = this.roundTotalPage(response.headers["x-wp-total"]);

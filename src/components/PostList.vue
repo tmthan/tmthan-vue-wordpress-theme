@@ -80,7 +80,7 @@ export default {
       margin-left: 20px;
       margin-right: 20px;
       &.bordered {
-        width: calc(100% / 3 - 100px);
+        width: calc(100% / 3 - 105px);
       }
       .post-link {
         .post-thumbnail {

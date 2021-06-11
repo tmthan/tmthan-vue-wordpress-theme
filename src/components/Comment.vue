@@ -105,7 +105,7 @@
         Gửi bình luận
       </button>
       <div class="comment-wait" v-show="disableComment">
-        <Snipper/>
+        <Snipper />
         Đang gửi bình luận. Vui lòng chờ xíu nhé
       </div>
     </div>
@@ -113,12 +113,13 @@
 </template>
 <script>
 import axios from "axios";
-import Snipper from './Spinner';
+import Snipper from "./Spinner";
+import { config } from "../env/config";
 
 export default {
   name: "Comment",
   components: {
-    Snipper
+    Snipper,
   },
   props: {
     comments: Array,
@@ -172,7 +173,7 @@ export default {
       if (this.postComment.name && this.postComment.email) {
         this.disableComment = true;
         const rs = await axios.post(
-          `https://tmthan.com/wp-json/wp/v2/comments?author_name=${
+          `${config}/comments?author_name=${
             this.postComment.name
           }&author_email=${this.postComment.email}&content=${
             this.postComment.content

@@ -29,6 +29,7 @@ import axios from "axios";
 import Comment from "../components/Comment";
 import RelatedPost from "../components/RelatedPost";
 import Snipper from "../components/Spinner";
+import { config } from '../env/config';
 
 export default {
   name: "Post",
@@ -85,7 +86,7 @@ export default {
       }
     },
     async getPost() {
-      const posts = await axios.get("https://tmthan.com/wp-json/wp/v2/posts", {
+      const posts = await axios.get(`${config}/posts`, {
         params: {
           slug: this.$route.params.postSlug,
         },
@@ -94,7 +95,7 @@ export default {
     },
     async getComment(postId) {
       const comments = await axios.get(
-        "https://tmthan.com/wp-json/wp/v2/comments",
+        `${config}/comments`,
         {
           params: {
             post: postId,

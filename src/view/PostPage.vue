@@ -17,6 +17,7 @@
 import PostList from "../components/PostList";
 import axios from "axios";
 import Paginate from "vuejs-paginate";
+import { config } from '../env/config';
 
 export default {
   name: "PostPage",
@@ -46,7 +47,7 @@ export default {
     async getPostList(page) {
       axios
         .get(
-          `https://tmthan.com/wp-json/wp/v2/posts?page=${page}&per_page=${this.perPage}`
+          `${config}/posts?page=${page}&per_page=${this.perPage}`
         )
         .then((response) => {
           this.postList = response.data;
