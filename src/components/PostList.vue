@@ -1,13 +1,13 @@
 <template>
 <div>  
     <Spinner v-if="!postList"/>
-  <ul
+  <main
     class="post-list"
     v-masonry
     transition-duration="0.3s"
     item-selector=".post-item"
   >
-    <li
+    <article
       v-masonry-tile
       v-for="post in postList"
       :key="post.id"
@@ -18,11 +18,11 @@
         <div class="post-thumbnail" v-if="post.jetpack_featured_media_url">
           <img :src="post.jetpack_featured_media_url" />
         </div>
-        <h1 class="post-title" v-html="post.title.rendered"></h1>
+        <h2 class="post-title" v-html="post.title.rendered"></h2>
         <div v-html="post.excerpt.rendered" class="post-description"></div>
       </router-link>
-    </li>
-  </ul>
+    </article>
+  </main>
 </div>
 </template>
 <script>

@@ -108,7 +108,7 @@ export default {
   position: fixed;
   background: rgba(255,255,255,0.8);
   backdrop-filter: saturate(180%) blur(20px);
-  z-index: 1;
+  z-index: 100;
   transition: all 0.3s linear;
   top: 0px;
   &.hide {

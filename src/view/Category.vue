@@ -1,13 +1,13 @@
 <template>
   <div class="category-page">
-    <div class="category-info">
+    <header class="category-info">
       <h1 class="category-name">
         {{ category.name }}
       </h1>
       <p class="category-description">
         {{ category.description }}
       </p>
-    </div>
+    </header>
     <Spinner v-if="!posts.length" />
     <PostList :postList="posts" />
     <Paginate

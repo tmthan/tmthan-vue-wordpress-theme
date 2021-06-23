@@ -1,5 +1,5 @@
 <template>
-  <div class="entry">
+  <article class="entry">
     <Snipper v-if="!post.content.rendered.length" />
     <div class="entry-cover">
       <img
@@ -7,7 +7,8 @@
         v-if="post && post.jetpack_featured_media_url"
       />
     </div>
-    <h1
+    <header>
+      <h1
       class="entry-title"
       v-if="post && post.content.rendered.length"
       v-html="post.title.rendered"
@@ -15,14 +16,15 @@
     <div class="entry-date" v-if="post && post.content.rendered.length">
       {{ postDate }}
     </div>
-    <div v-html="post.content.rendered" class="entry-content"></div>
+    </header>    
+    <main v-html="post.content.rendered" class="entry-content"></main>
     <RelatedPost :posts="post['jetpack-related-posts']" />
     <Comment
       v-if="post && post.content.rendered.length"
       :comments="comment"
       :postId="post.id"
     />
-  </div>
+  </article>
 </template>
 <script>
 import axios from "axios";

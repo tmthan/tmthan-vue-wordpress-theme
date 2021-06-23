@@ -2,8 +2,8 @@
   <div class="comment">
     <div v-for="comment in comments" :key="comment.id">
       <template v-if="0 == comment.parent">
-        <div class="comment-item" :id="`comment_${comment.id}`">
-          <div class="comment-author">
+        <article class="comment-item" :id="`comment_${comment.id}`">
+          <header class="comment-author">
             <img :src="comment.author_avatar_urls['96']" class="avatar" />
             <div class="author-info">
               <div class="author-name">
@@ -16,7 +16,7 @@
                 {{ formatTime(comment.date) }}
               </div>
             </div>
-          </div>
+          </header>
           <div v-html="comment.content.rendered" class="comment-content"></div>
 
           <a
@@ -26,7 +26,7 @@
           >
             Trả lời
           </a>
-        </div>
+        </article>
         <div
           v-for="childComment in comments"
           :key="childComment.id"
