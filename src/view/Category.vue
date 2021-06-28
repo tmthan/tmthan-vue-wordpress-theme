@@ -81,7 +81,7 @@ export default {
           per_page: this.perPage,
         },
       });
-      this.totalPage = this.roundTotalPage(posts.headers["x-wp-total"]);
+      this.totalPage = posts.headers["x-wp-total"];
       this.page = page;
       return posts.data;
     },
@@ -89,13 +89,6 @@ export default {
       this.$router.push(
         `/category/${this.$route.params.categorySlug}/page/${pageNum}`
       );
-    },
-    roundTotalPage(total) {
-      if (0 == total % this.perPage) {
-        return total / this.perPage;
-      } else {
-        return Math.round(total / this.perPage) + 1;
-      }
     },
   },
 };
