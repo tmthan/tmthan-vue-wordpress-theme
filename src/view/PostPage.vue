@@ -51,7 +51,7 @@ export default {
         )
         .then((response) => {
           this.postList = response.data;
-          this.totalPage = this.roundTotalPage(response.headers["x-wp-total"]);
+          this.totalPage = response.headers["x-wp-total"];
           this.page = page;
         })
         .catch((e) => {
@@ -60,13 +60,6 @@ export default {
     },
     async goToPage(pageNum) {
       this.$router.push(`/page/${pageNum}`);
-    },
-    roundTotalPage(total) {
-      if (0 == total % this.perPage) {
-        return total / this.perPage;
-      } else {
-        return Math.round(total / this.perPage) + 1;
-      }
     },
   },
 };
