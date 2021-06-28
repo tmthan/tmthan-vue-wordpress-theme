@@ -75,7 +75,7 @@ export default {
           `${config}/posts?page=${page}&per_page=${this.perPage}&categories=${this.category.id}`
         )
         .then((response) => {          
-          this.totalPage = this.roundTotalPage(response.headers["x-wp-total"]);
+          this.totalPage = response.headers["x-wp-total"];
           this.page = page;
           this.posts = response.data;
         })
@@ -87,13 +87,6 @@ export default {
       this.$router.push(
         `/category/${this.$route.params.categorySlug}/page/${pageNum}`
       );
-    },
-    roundTotalPage(total) {
-      if (0 == total % this.perPage) {
-        return total / this.perPage;
-      } else {
-        return Math.round(total / this.perPage) + 1;
-      }
     },
   },
 };
