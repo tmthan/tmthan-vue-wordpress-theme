@@ -1,6 +1,75 @@
 <template>
   <div class="canvas">
-    <!-- <div class="sakuras" aria-hidden="true"> -->
+    <div class="player">
+      <div class="control">
+        <span class="play" @click="play()" v-if="!isPlaying"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            class="svg"
+          >
+            <g data-name="Layer 2">
+              <g data-name="play-circle">
+                <rect width="24" height="24" opacity="0" />
+                <path
+                  d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"
+                />
+                <path
+                  d="M12.34 7.45a1.7 1.7 0 0 0-1.85-.3 1.6 1.6 0 0 0-1 1.48v6.74a1.6 1.6 0 0 0 1 1.48 1.68 1.68 0 0 0 .69.15 1.74 1.74 0 0 0 1.16-.45L16 13.18a1.6 1.6 0 0 0 0-2.36zm-.84 7.15V9.4l2.81 2.6z"
+                />
+              </g>
+            </g></svg
+        ></span>
+        <span class="pause" @click="pause()" v-if="isPlaying">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            class="svg"
+          >
+            <g data-name="Layer 2">
+              <g data-name="pause-circle">
+                <rect width="24" height="24" opacity="0" />
+                <path
+                  d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"
+                />
+                <path
+                  d="M15 8a1 1 0 0 0-1 1v6a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1z"
+                />
+                <path d="M9 8a1 1 0 0 0-1 1v6a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1z" />
+              </g>
+            </g>
+          </svg>
+        </span>
+        <span class="next" @click="next()">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            class="svg"
+          >
+            <g data-name="Layer 2">
+              <g data-name="rewind-right">
+                <rect width="24" height="24" opacity="0" />
+                <path
+                  d="M20.86 10.67l-5.1-4.21a2.1 2.1 0 0 0-2.21-.26 1.76 1.76 0 0 0-1.05 1.59v2.59L7.76 6.46a2.1 2.1 0 0 0-2.21-.26 1.76 1.76 0 0 0-1 1.59v8.42a1.76 1.76 0 0 0 1 1.59 2.23 2.23 0 0 0 .91.2 2.06 2.06 0 0 0 1.3-.46l4.74-3.92v2.59a1.76 1.76 0 0 0 1.05 1.59 2.23 2.23 0 0 0 .91.2 2.06 2.06 0 0 0 1.3-.46l5.1-4.21a1.7 1.7 0 0 0 0-2.66zM6.5 15.91V8l4.82 4zm8 0V8l4.82 4z"
+                />
+              </g>
+            </g>
+          </svg>
+        </span>
+      </div>
+      <div class="media-player">
+        <audio
+          id="audio-player"
+          crossOrigin="anonymous"
+          :src="playingSong ? playingSong.url : ''"
+          autoplay="autoplay"
+          controls
+        ></audio>
+      </div>
+    </div>
+    <div class="lyric-block">
+      {{ currentLyric }}
+    </div>
     <div class="sakura">
       <div class="firefly1"></div>
     </div>
@@ -37,9 +106,65 @@
     <div class="sakura">
       <div class="firefly12"></div>
     </div>
-    <!-- </div> -->
   </div>
 </template>
+<script>
+import axios from "axios";
+import { handleLyric, getCurrentLyric } from "../assets/HandleLyric";
+
+export default {
+  data() {
+    return {
+      isPlaying: false,
+      playingSong: {},
+      playingSongName: "",
+      currentTime: 0,
+      audioElement: {},
+      playlist: [],
+      songIndex: 0,
+      currentLyric: "",
+    };
+  },
+  async created() {
+    this.playlist = await axios.get('https://tmthan.com/wp-content/themes/tmthan/dist/playlist.json').then((rs) => rs.data);
+    this.playlist = this.playlist.map((item) => ({
+      ...item,
+      lyric: handleLyric(item.lyric),
+    }));
+    this.playingSong = this.playlist[this.songIndex];
+  },
+  mounted() {
+    this.audioElement = document.getElementById("audio-player");
+    this.audioElement.ontimeupdate = () => {
+      this.currentTime = this.audioElement.currentTime;
+      this.currentLyric = getCurrentLyric(
+        this.currentTime,
+        this.playingSong.lyric
+      );
+    };
+    this.audioElement.onplaying = () => {
+      this.isPlaying = true;
+    };
+    this.audioElement.onpause = () => {
+      this.isPlaying = false;
+    };
+  },
+  methods: {
+    play() {
+      this.audioElement.play();
+    },
+    pause() {
+      this.audioElement.pause();
+    },
+    next() {
+      if (this.songIndex < this.playlist.length - 1) {
+        this.songIndex++;
+        this.playingSong = this.playlist[this.songIndex];
+      }
+    },
+  },
+};
+</script>
 <style lang="scss" scoped>
 .canvas {
   background: #08080a
@@ -52,6 +177,37 @@
   position: relative;
   z-index: 1;
   margin-bottom: 40px;
+  .player {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    color: #fff;
+    width: 60px;
+    height: 20px;
+    .control {
+      .play,
+      .pause,
+      .next {
+        .svg {
+          fill: #fff;
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+    .media-player {
+      display: none;
+    }
+  }
+  .lyric-block {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    color: #fff;
+  }
 }
 
 @media only screen and (min-width: 992px) {
