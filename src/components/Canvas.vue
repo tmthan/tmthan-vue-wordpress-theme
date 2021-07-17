@@ -131,7 +131,7 @@ export default {
       ...item,
       lyric: handleLyric(item.lyric),
     }));
-    this.playingSong = this.playlist[this.songIndex];
+    this.playingSong = this.playlist[this.songIndex];    
   },
   mounted() {
     this.audioElement = document.getElementById("audio-player");
@@ -148,6 +148,7 @@ export default {
     this.audioElement.onpause = () => {
       this.isPlaying = false;
     };
+    this.audioElement.pause();
   },
   methods: {
     play() {
