@@ -81,7 +81,7 @@ export default {
           per_page: this.perPage,
         },
       });
-      this.totalPage = posts.headers["x-wp-totalpages"];
+      this.totalPage = Number(posts.headers["x-wp-totalpages"]);
       this.page = page;
       return posts.data;
     },

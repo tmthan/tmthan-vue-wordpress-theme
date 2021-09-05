@@ -62,7 +62,6 @@
           id="audio-player"
           crossOrigin="anonymous"
           :src="playingSong ? playingSong.url : ''"
-          autoplay="autoplay"
           controls
         ></audio>
       </div>
@@ -161,6 +160,7 @@ export default {
       if (this.songIndex < this.playlist.length - 1) {
         this.songIndex++;
         this.playingSong = this.playlist[this.songIndex];
+        setTimeout(() => this.play(), 100);
       }
     },
   },

@@ -75,7 +75,7 @@ export default {
           `${config}/posts?page=${page}&per_page=${this.perPage}&categories=${this.category.id}`
         )
         .then((response) => {          
-          this.totalPage = response.headers["x-wp-totalpages"];
+          this.totalPage = Number(response.headers["x-wp-totalpages"]);
           this.page = page;
           this.posts = response.data;
         })

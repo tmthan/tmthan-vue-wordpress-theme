@@ -51,7 +51,7 @@ export default {
         )
         .then((response) => {
           this.postList = response.data;
-          this.totalPage = response.headers["x-wp-totalpages"];
+          this.totalPage = Number(response.headers["x-wp-totalpages"]);
           this.page = page;
         })
         .catch((e) => {
