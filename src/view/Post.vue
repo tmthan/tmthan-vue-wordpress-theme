@@ -9,14 +9,14 @@
     </div>
     <header>
       <h1
-      class="entry-title"
-      v-if="post && post.content.rendered.length"
-      v-html="post.title.rendered"
-    ></h1>
-    <div class="entry-date" v-if="post && post.content.rendered.length">
-      {{ postDate }}
-    </div>
-    </header>    
+        class="entry-title"
+        v-if="post && post.content.rendered.length"
+        v-html="post.title.rendered"
+      ></h1>
+      <div class="entry-date" v-if="post && post.content.rendered.length">
+        {{ postDate }}
+      </div>
+    </header>
     <main v-html="post.content.rendered" class="entry-content"></main>
     <RelatedPost :posts="post['jetpack-related-posts']" />
     <Comment
@@ -31,7 +31,7 @@ import axios from "axios";
 import Comment from "../components/Comment";
 import RelatedPost from "../components/RelatedPost";
 import Snipper from "../components/Spinner";
-import { config } from '../env/config';
+import { config } from "../env/config";
 
 export default {
   name: "Post",
@@ -96,14 +96,11 @@ export default {
       return posts.data[0];
     },
     async getComment(postId) {
-      const comments = await axios.get(
-        `${config}/comments`,
-        {
-          params: {
-            post: postId,
-          },
-        }
-      );
+      const comments = await axios.get(`${config}/comments`, {
+        params: {
+          post: postId,
+        },
+      });
       return comments.data;
     },
   },
@@ -153,6 +150,13 @@ export default {
       }
       iframe {
         max-width: calc(100vw - 30px);
+      }
+    }
+    .wp-block-image,
+    .wp-block-gallery {
+      figcaption {
+        font-size: 14px;
+        text-align: center;
       }
     }
   }
