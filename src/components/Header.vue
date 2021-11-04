@@ -1,5 +1,5 @@
 <template>
-  <header class="nav-bar" id="nav_bar" :class="{hide: hideMenu}">
+  <header class="nav-bar" id="nav_bar" :class="{ hide: hideMenu }">
     <div class="container">
       <div class="site-brand">
         <h1 class="site-name">
@@ -102,203 +102,189 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
+<style lang="css" scoped>
 .nav-bar {
   width: calc(100vw + 1px);
   position: fixed;
-  background: rgba(255,255,255,0.8);
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: saturate(180%) blur(20px);
   z-index: 100;
   transition: all 0.3s linear;
   top: 0px;
-  &.hide {
-    top: -90px;
-  }
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    position: relative;
-    .site-brand {
-      .site-name {
-        a {
-          text-decoration: none;
-          font-size: 26px;
-          color: #42414e;
-          background: -webkit-linear-gradient(
-            right,
-            #96b6cc,
-            #89c9ce,
-            #e3e0e2,
-            #d297d9,
-            #b1a2ce
-          );
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-        }
-      }
-      .site-description {
-        margin-top: 10px;
-        color: #828089;
-        font-size: 14px;
-      }
-    }
-    .search-icon {
-      position: absolute;
-      right: 50px;
-    }
-    .site-navigation {
-      #toggle-menu {
-        width: 24px;
-        height: 24px;
-        position: relative;
-        margin: 10px;
-        -webkit-transform: rotate(0deg);
-        -moz-transform: rotate(0deg);
-        -o-transform: rotate(0deg);
-        transform: rotate(0deg);
-        -webkit-transition: 0.5s ease-in-out;
-        -moz-transition: 0.5s ease-in-out;
-        -o-transition: 0.5s ease-in-out;
-        transition: 0.5s ease-in-out;
-        cursor: pointer;
-        span {
-          display: block;
-          position: absolute;
-          height: 2px;
-          width: 100%;
-          background: #181818;
-          border-radius: 0px;
-          opacity: 1;
-          left: 0;
-          -webkit-transform: rotate(0deg);
-          -moz-transform: rotate(0deg);
-          -o-transform: rotate(0deg);
-          transform: rotate(0deg);
-          -webkit-transition: 0.25s ease-in-out;
-          -moz-transition: 0.25s ease-in-out;
-          -o-transition: 0.25s ease-in-out;
-          transition: 0.25s ease-in-out;
-          &:nth-child(1) {
-            top: 0px;
-          }
-          &:nth-child(2),
-          &:nth-child(3) {
-            top: 11px;
-          }
-          &:nth-child(4) {
-            top: 22px;
-          }
-        }
-        &.open {
-          span:nth-child(1) {
-            top: 11px;
-            width: 0%;
-            left: 50%;
-          }
-          span:nth-child(2) {
-            -webkit-transform: rotate(45deg);
-            -moz-transform: rotate(45deg);
-            -o-transform: rotate(45deg);
-            transform: rotate(45deg);
-          }
-          span:nth-child(3) {
-            -webkit-transform: rotate(-45deg);
-            -moz-transform: rotate(-45deg);
-            -o-transform: rotate(-45deg);
-            transform: rotate(-45deg);
-          }
-          span:nth-child(4) {
-            top: 11px;
-            width: 0%;
-            left: 50%;
-          }
-        }
-      }
-      .nav {
-        display: none;
-        animation-duration: 0.3s;
-        animation-name: fadeOutUp;
-        &.show {
-          display: block;
-          position: absolute;
-          width: calc(100% + 2px);
-          height: calc(100vh - 78px);
-          right: -1px;
-          top: 79px;
-          z-index: 1;
-          background: #fff;
-          animation-name: fadeInDown;
-          animation-duration: 0.3s;
-          .menu {
-            list-style: none;
-            .menu-item {
-              padding: 10px;
-              border-top: 1px solid #efeff0;
-              a {
-                color: #181818;
-                text-decoration: none;
-              }
-              &:hover > a {
-                color: #a8a8ad;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+}
+.nav-bar.hide {
+  top: -90px;
+}
+.nav-bar .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  position: relative;
+}
+.nav-bar .container .site-brand .site-name a {
+  text-decoration: none;
+  font-size: 26px;
+  color: #42414e;
+  background: -webkit-linear-gradient(
+    right,
+    #96b6cc,
+    #89c9ce,
+    #e3e0e2,
+    #d297d9,
+    #b1a2ce
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.nav-bar .container .site-brand .site-description {
+  margin-top: 10px;
+  color: #828089;
+  font-size: 14px;
+}
+.nav-bar .container .search-icon {
+  position: absolute;
+  right: 50px;
+}
+.nav-bar .container .site-navigation #toggle-menu {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  margin: 10px;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: 0.5s ease-in-out;
+  -moz-transition: 0.5s ease-in-out;
+  -o-transition: 0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
+  cursor: pointer;
+}
+.nav-bar .container .site-navigation #toggle-menu span {
+  display: block;
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  background: #181818;
+  border-radius: 0px;
+  opacity: 1;
+  left: 0;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: 0.25s ease-in-out;
+  -moz-transition: 0.25s ease-in-out;
+  -o-transition: 0.25s ease-in-out;
+  transition: 0.25s ease-in-out;
+}
+.nav-bar .container .site-navigation #toggle-menu span:nth-child(1) {
+  top: 0px;
+}
+.nav-bar .container .site-navigation #toggle-menu span:nth-child(2),
+.nav-bar .container .site-navigation #toggle-menu span:nth-child(3) {
+  top: 11px;
+}
+.nav-bar .container .site-navigation #toggle-menu span:nth-child(4) {
+  top: 22px;
+}
+.nav-bar .container .site-navigation #toggle-menu.open span:nth-child(1) {
+  top: 11px;
+  width: 0%;
+  left: 50%;
+}
+.nav-bar .container .site-navigation #toggle-menu.open span:nth-child(2) {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.nav-bar .container .site-navigation #toggle-menu.open span:nth-child(3) {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+.nav-bar .container .site-navigation #toggle-menu.open span:nth-child(4) {
+  top: 11px;
+  width: 0%;
+  left: 50%;
+}
+.nav-bar .container .site-navigation .nav {
+  display: none;
+  animation-duration: 0.3s;
+  animation-name: fadeOutUp;
+}
+.nav-bar .container .site-navigation .nav.show {
+  display: block;
+  position: absolute;
+  width: calc(100% + 2px);
+  height: calc(100vh - 78px);
+  right: -1px;
+  top: 79px;
+  z-index: 1;
+  background: #fff;
+  animation-name: fadeInDown;
+  animation-duration: 0.3s;
+}
+.nav-bar .container .site-navigation .nav.show .menu {
+  list-style: none;
+}
+.nav-bar .container .site-navigation .nav.show .menu .menu-item {
+  padding: 10px;
+  border-top: 1px solid #efeff0;
+}
+.nav-bar .container .site-navigation .nav.show .menu .menu-item a {
+  color: #181818;
+  text-decoration: none;
+}
+.nav-bar .container .site-navigation .nav.show .menu .menu-item:hover > a {
+  color: #a8a8ad;
 }
 @media only screen and (min-width: 768px) {
-  .nav-bar {
-    .container {
-      .site-navigation {
-        display: flex;
-        #toggle-menu {
-          order: 2;
-        }
-        .nav {
-          order: 1;
-          &.show {
-            position: relative;
-            width: auto;
-            height: auto;
-            right: auto;
-            top: auto;
-            animation-name: fadeInRight;
-            background: transparent;
-            margin-right: 40px;
-            .menu {
-              height: 100%;
-              display: flex;
-              align-items: center;
-              .menu-item {
-                border: none;
-                font-size: 15px;
-                a {
-                  color: #181818;
-                  &:hover {
-                    color: #a8a8ad;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+  .nav-bar .container .site-navigation {
+    display: flex;
+  }
+  .nav-bar .container .site-navigation #toggle-menu {
+    order: 2;
+  }
+  .nav-bar .container .site-navigation .nav {
+    order: 1;
+  }
+  .nav-bar .container .site-navigation .nav.show {
+    position: relative;
+    width: auto;
+    height: auto;
+    right: auto;
+    top: auto;
+    animation-name: fadeInRight;
+    background: transparent;
+    margin-right: 40px;
+  }
+  .nav-bar .container .site-navigation .nav.show .menu {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .nav-bar .container .site-navigation .nav.show .menu .menu-item {
+    border: none;
+    font-size: 15px;
+  }
+  .nav-bar .container .site-navigation .nav.show .menu .menu-item a {
+    color: #181818;
+  }
+  .nav-bar .container .site-navigation .nav.show .menu .menu-item a:hover {
+    color: #a8a8ad;
   }
 }
-
 @keyframes fadeInDown {
   from {
     opacity: 0;
     transform: translate3d(0, -100%, 0);
   }
-
   to {
     opacity: 1;
     transform: translate3d(0, 0, 0);
@@ -309,7 +295,6 @@ export default {
     opacity: 0;
     transform: translate3d(100%, 0, 0);
   }
-
   to {
     opacity: 1;
     transform: translate3d(0, 0, 0);

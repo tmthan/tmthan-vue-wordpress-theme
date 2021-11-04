@@ -19,9 +19,7 @@
     </svg>
   </div>
 </template>
-<style lang="scss" scoped>
-$offset: 187;
-$duration: 1.4s;
+<style lang="css" scoped>
 .loading {
   display: flex;
   align-items: center;
@@ -31,18 +29,16 @@ $duration: 1.4s;
   height: 100%;
   left: 0;
   top: 0;
-  background: #ffffff;
-  .spinner {
-    animation: rotator $duration linear infinite;
-  }
-
-  .path {
-    stroke-dasharray: $offset;
-    stroke-dashoffset: 0;
-    transform-origin: center;
-    animation: dash $duration ease-in-out infinite,
-      colors ($duration * 4) ease-in-out infinite;
-  }
+  background: #fff;
+}
+.loading .spinner {
+  animation: rotator 1.4s linear infinite;
+}
+.loading .path {
+  stroke-dasharray: 187;
+  stroke-dashoffset: 0;
+  transform-origin: center;
+  animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
 }
 @keyframes rotator {
   0% {
@@ -69,17 +65,16 @@ $duration: 1.4s;
     stroke: #4285f4;
   }
 }
-
 @keyframes dash {
   0% {
-    stroke-dashoffset: $offset;
+    stroke-dashoffset: 187;
   }
   50% {
-    stroke-dashoffset: $offset/4;
+    stroke-dashoffset: 46.75;
     transform: rotate(135deg);
   }
   100% {
-    stroke-dashoffset: $offset;
+    stroke-dashoffset: 187;
     transform: rotate(450deg);
   }
 }

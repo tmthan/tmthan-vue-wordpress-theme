@@ -106,83 +106,79 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
-.entry {
-  .entry-cover {
-    text-align: center;
-    img {
-      height: auto;
-      max-width: 100%;
-      margin: 0 auto;
-    }
-  }
-  .entry-date {
-    font-size: 13px;
-    text-align: center;
-  }
-  .entry-title {
-    text-align: center;
-    font-size: 36px;
-    font-weight: 500;
-    margin-top: 60px;
-    margin-bottom: 30px;
-  }
-  .entry-content {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 30px 15px;
-    font-size: 20px;
-    line-height: 1.8;
-  }
+<style lang="css" scoped>
+.entry .entry-cover {
+  text-align: center;
+}
+.entry .entry-cover img {
+  height: auto;
+  max-width: 100%;
+  margin: 0 auto;
+}
+.entry .entry-date {
+  font-size: 13px;
+  text-align: center;
+}
+.entry .entry-title {
+  text-align: center;
+  font-size: 36px;
+  font-weight: 500;
+  margin-top: 60px;
+  margin-bottom: 30px;
+}
+.entry .entry-content {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 30px 15px;
+  font-size: 20px;
+  line-height: 1.8;
 }
 </style>
-<style lang="scss">
-.entry {
-  .entry-content {
-    p,
-    div,
-    figure {
-      padding: 15px 0;
-      width: 100%;
-      img {
-        max-width: calc(100vw - 30px);
-        height: auto;
-      }
-      iframe {
-        max-width: calc(100vw - 30px);
-      }
-    }
-    .wp-block-image,
-    .wp-block-gallery {
-      figcaption {
-        font-size: 14px;
-        text-align: center;
-      }
-    }
-  }
+<style lang="css">
+.entry .entry-content p,
+.entry .entry-content div,
+.entry .entry-content figure {
+  padding: 15px 0;
+  width: 100%;
+}
+.entry .entry-content p img,
+.entry .entry-content div img,
+.entry .entry-content figure img {
+  max-width: calc(100vw - 30px);
+  height: auto;
+}
+.entry .entry-content p iframe,
+.entry .entry-content div iframe,
+.entry .entry-content figure iframe {
+  max-width: calc(100vw - 30px);
+}
+.entry .entry-content .wp-block-image figcaption,
+.entry .entry-content .wp-block-gallery figcaption {
+  font-size: 14px;
+  text-align: center;
 }
 @media only screen and (min-width: 768px) {
-  .entry {
-    .entry-content {
-      p,
-      div,
-      figure {
-        padding: 15px 0;
-        width: 100%;
-        img {
-          max-width: 80vw;
-          height: auto;
-          position: relative;
-          left: 50%;
-          transform: translateX(-50%);
-        }
-        iframe {
-          position: relative;
-          left: 50%;
-          transform: translateX(-50%);
-        }
-      }
-    }
+  .entry .entry-content p,
+  .entry .entry-content div,
+  .entry .entry-content figure {
+    padding: 15px 0;
+    width: 100%;
+  }
+  .entry .entry-content p img,
+  .entry .entry-content div img,
+  .entry .entry-content figure img {
+    max-width: 80vw;
+    height: auto;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .entry .entry-content p iframe,
+  .entry .entry-content div iframe,
+  .entry .entry-content figure iframe {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 </style>

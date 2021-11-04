@@ -30,7 +30,7 @@
 </template>
 <script>
 import axios from "axios";
-import { config } from '../env/config';
+import { config } from "../env/config";
 
 export default {
   name: "Search",
@@ -63,53 +63,53 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
+<style lang="css" scoped>
 .search-page {
   padding: 10px;
-  .label {
-    text-align: center;
-  }
-  .input-group {
-    max-width: 720px;
-    border-radius: 30px;
-    padding: 10px;
-    background: #eee;
-    position: relative;
-    margin: 20px auto;
-    .input {
-      outline: none;
-      width: 100%;
-      text-align: center;
-      font-size: 20px;
-      border: none;
-      background: transparent;
-    }
-    .submit {
-      border: none;
-      outline: none;
-      position: absolute;
-      right: -6px;
-      top: 6px;
-      background: transparent;
-      cursor: pointer;
-    }
-  }
-  .search-result {
-    max-width: 720px;
-    margin: 0 auto;
-    list-style: none;
-    .search-result-item {
-      padding: 10px;
-      &:hover {
-        background: #f7d9d9;
-      }
-      .post-link {
-        color: #333;
-        text-decoration: none;
-        padding: 10px 0;
-        width: 100%;
-      }
-    }
-  }
+}
+.search-page .label {
+  text-align: center;
+}
+.search-page .input-group {
+  max-width: 720px;
+  border-radius: 30px;
+  padding: 10px;
+  background: #eee;
+  position: relative;
+  margin: 20px auto;
+}
+.search-page .input-group .input {
+  outline: none;
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
+  border: none;
+  background: transparent;
+}
+.search-page .input-group .submit {
+  border: none;
+  outline: none;
+  position: absolute;
+  right: -6px;
+  top: 6px;
+  background: transparent;
+  cursor: pointer;
+}
+.search-page .search-result {
+  max-width: 720px;
+  margin: 0 auto;
+  list-style: none;
+}
+.search-page .search-result .search-result-item {
+  padding: 10px;
+}
+.search-page .search-result .search-result-item:hover {
+  background: #f7d9d9;
+}
+.search-page .search-result .search-result-item .post-link {
+  color: #333;
+  text-decoration: none;
+  padding: 10px 0;
+  width: 100%;
 }
 </style>

@@ -68,21 +68,21 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
+<style lang="css" scoped>
 .scroll-top {
   position: fixed;
   cursor: pointer;
   right: -54px;
   bottom: 15vh;
   transform: rotate(-90deg);
-  background: #fff3;
+  background: #fff 3;
   transition: all 0.2s linear;
   padding: 10px;
   display: flex;
   backdrop-filter: blur(3px);
-  &.hide {
-    right: -95px;
-  }
+}
+.scroll-top.hide {
+  right: -95px;
 }
 .footer {
   padding: 30px;

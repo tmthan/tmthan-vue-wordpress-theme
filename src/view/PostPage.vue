@@ -17,7 +17,7 @@
 import PostList from "../components/PostList";
 import axios from "axios";
 import Paginate from "vuejs-paginate";
-import { config } from '../env/config';
+import { config } from "../env/config";
 
 export default {
   name: "PostPage",
@@ -46,9 +46,7 @@ export default {
   methods: {
     async getPostList(page) {
       axios
-        .get(
-          `${config}/posts?page=${page}&per_page=${this.perPage}`
-        )
+        .get(`${config}/posts?page=${page}&per_page=${this.perPage}`)
         .then((response) => {
           this.postList = response.data;
           this.totalPage = Number(response.headers["x-wp-totalpages"]);
@@ -64,26 +62,26 @@ export default {
   },
 };
 </script>
-<style lang="scss">
+<style lang="css">
 .pagination {
   list-style: none;
-  display: flex;  
+  display: flex;
   justify-content: center;
-  li {
-    display: none;
-    outline: none;
-    a:focus {
-      outline: none;
-    }
-  }
-  li.page-item {
-    padding: 10px 20px;
-    display: block;
-  }
-  li.page-item.active {
-    background: #c0748b;
-    border-radius: 6px;
-    color: #fff;
-  }
+}
+.pagination li {
+  display: none;
+  outline: none;
+}
+.pagination li a:focus {
+  outline: none;
+}
+.pagination li.page-item {
+  padding: 10px 20px;
+  display: block;
+}
+.pagination li.page-item.active {
+  background: #c0748b;
+  border-radius: 6px;
+  color: #fff;
 }
 </style>

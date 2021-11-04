@@ -63,14 +63,11 @@ export default {
       }
     },
     async getCategory() {
-      const category = await axios.get(
-        `${config}/categories`,
-        {
-          params: {
-            slug: this.$route.params.categorySlug,
-          },
-        }
-      );
+      const category = await axios.get(`${config}/categories`, {
+        params: {
+          slug: this.$route.params.categorySlug,
+        },
+      });
       return category.data[0];
     },
     async getPost(page) {
@@ -93,33 +90,25 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
-.category-page {
-  .category-info {
-    background: #eee;
-    border-radius: 20px;
-    padding: 30px;
-    margin: 20px;
-    .category-name {
-      font-size: 28px;
-      font-weight: 500;
-    }
-    .category-description {
-      line-height: 1.8;
-      padding-top: 20px;
-    }
-  }
+<style lang="css" scoped>
+.category-page .category-info {
+  background: #eee;
+  border-radius: 20px;
+  padding: 30px;
+  margin: 20px;
+}
+.category-page .category-info .category-name {
+  font-size: 28px;
+  font-weight: 500;
+}
+.category-page .category-info .category-description {
+  line-height: 1.8;
+  padding-top: 20px;
 }
 @media only screen and (min-width: 720px) {
-  .category-page {
-    .category-info {
-      width: fit-content;
-      min-width: 300px;
-      .category-name {
-      }
-      .category-description {
-      }
-    }
+  .category-page .category-info {
+    width: fit-content;
+    min-width: 300px;
   }
 }
 </style>
