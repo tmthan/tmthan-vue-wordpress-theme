@@ -78,10 +78,13 @@ export default {
 .pagination li.page-item {
   padding: 10px 20px;
   display: block;
+  border-radius: 6px;
+}
+.pagination li.page-item:hover {
+  background: #eee;
 }
 .pagination li.page-item.active {
-  background: #c0748b;
-  border-radius: 6px;
+  background: #c0748b;  
   color: #fff;
 }
 </style>

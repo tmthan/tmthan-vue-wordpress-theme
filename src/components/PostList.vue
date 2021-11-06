@@ -105,7 +105,7 @@ export default {
   line-height: 1.8;
 }
 .post-list .post-item .post-link .post-description {
-  padding: 0px 15px 15px 15px;
+  padding: 0px 15px;
   line-height: 1.8;
   overflow: hidden;
   display: -webkit-box;
@@ -123,6 +123,31 @@ export default {
     width: calc(100% / 3 - 130px);
     margin-left: 40px;
     margin-right: 40px;
+    transition: 0.3s;
+    position: relative;
+  }
+  .post-list .post-item.bordered:hover {
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .post-list .post-item.bordered:hover a {
+    color: #fff;
+  }
+  .post-list .post-item.bordered::after {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: linear-gradient(to right, #be93c5, #7bc6cc);
+    opacity: 0;
+  }
+
+  .post-list .post-item.bordered:hover::after {
+    opacity: 1;
+    z-index: -1;
   }
   .post-list .post-item .post-link .post-title {
     padding: 15px 0;
