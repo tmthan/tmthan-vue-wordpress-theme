@@ -157,6 +157,26 @@ export default {
   font-size: 14px;
   text-align: center;
 }
+.entry .entry-content .wp-caption {
+  max-width: 100%;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.entry .entry-content .wp-caption p {
+  width: 100%;
+  max-width: calc(100vw - 30px);
+  font-size: 14px;
+}
+.entry .entry-content .wp-caption.aligncenter p {
+  text-align: center;
+}
+.entry .entry-content .wp-caption.alignleft p {
+  text-align: left;
+}
+.entry .entry-content .wp-caption.alignright p {
+  text-align: right;
+}
 @media only screen and (min-width: 768px) {
   .entry .entry-content p,
   .entry .entry-content div,
