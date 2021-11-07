@@ -4,11 +4,11 @@
   </div>
 </template>
 <script>
-import WaitingIcon from "../assets/waiting.webp";
+import { WAITING_ICON_URL } from "../env/assets";
 export default {
   data() {
     return {
-      waitingIcon: WaitingIcon,
+      waitingIcon: WAITING_ICON_URL,
     };
   },
 };
