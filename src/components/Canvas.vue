@@ -110,6 +110,7 @@
 <script>
 import axios from "axios";
 import { handleLyric, getCurrentLyric } from "../assets/HandleLyric";
+import { LYRIC_PLAYLIST } from "../env/assets";
 
 export default {
   data() {
@@ -125,9 +126,7 @@ export default {
     };
   },
   async created() {
-    this.playlist = await axios
-      .get("https://tmthan.com/wp-content/themes/tmthan/dist/playlist.json")
-      .then((rs) => rs.data);
+    this.playlist = await axios.get(LYRIC_PLAYLIST).then((rs) => rs.data);
     this.playlist = this.playlist.map((item) => ({
       ...item,
       lyric: handleLyric(item.lyric),
