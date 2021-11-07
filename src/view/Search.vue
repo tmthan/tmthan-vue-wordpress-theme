@@ -2,7 +2,7 @@
   <div class="search-page">
     <h1 class="label">Tìm kiếm</h1>
     <form class="input-group" @submit="search">
-      <input class="input" v-model="keyword" />
+      <input class="input" v-model="keyword" ref="inputRef"/>
       <button class="submit" type="submit">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -44,10 +44,13 @@ export default {
   async created() {
     document.title = "Tìm kiếm - thân";
   },
-  watch: {},
+  mounted() {
+    this.$refs.inputRef.focus();
+  },
   methods: {
     async search(event) {
       event.preventDefault();
+      this.$refs.inputRef.blur();
       const posts = await axios.get(`${config}/search`, {
         params: {
           search: this.keyword,
@@ -58,7 +61,6 @@ export default {
         title: item.title,
         url: new URL(item.url).pathname,
       }));
-      console.log(this.posts);
     },
   },
 };
@@ -105,6 +107,7 @@ export default {
 }
 .search-page .search-result .search-result-item:hover {
   background: #f7d9d9;
+  border-radius: 8px;
 }
 .search-page .search-result .search-result-item .post-link {
   color: #333;
