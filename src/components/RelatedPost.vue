@@ -21,7 +21,7 @@ export default {
   methods: {
     postLink(url) {
       const urlArray = url.split("/");
-      return urlArray[urlArray.length - 2];
+      return `/${urlArray[urlArray.length - 2]}`;
     },
   },
 };

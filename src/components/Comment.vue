@@ -1,8 +1,8 @@
 <template>
-  <div class="comment">
+  <div class="comment" id="comments">
     <div v-for="comment in comments" :key="comment.id">
       <template v-if="0 == comment.parent">
-        <article class="comment-item" :id="`comment_${comment.id}`">
+        <article class="comment-item" :id="`comment-${comment.id}`">
           <header class="comment-author">
             <img :src="comment.author_avatar_urls['96']" class="avatar" />
             <div class="author-info">
