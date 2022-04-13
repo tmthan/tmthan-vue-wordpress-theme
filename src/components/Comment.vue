@@ -334,6 +334,10 @@ export default {
   border-radius: 10px;
   outline: none;
 }
+.comment #comment-form textarea.comment-input {
+  resize: none;
+  height: 10rem;
+}
 .comment #comment-form .remember-info {
   display: flex;
   align-items: center;

@@ -1,5 +1,7 @@
-# wptheme
-
+Mấy ông chê cùi chứ giề.
+Tui lười quá mấy ông ạ, nên chỉ viết cho chạy được thôi.
+Ông nào có nhã ý muốn đóng góp thì cứ sửa, chứ tui lười quá.
+Đồ cùi quá nên tui cho mấy ông dùng miễn phí đó. Không lấy tiền đâu.
 ## Project setup
 ```
 npm install

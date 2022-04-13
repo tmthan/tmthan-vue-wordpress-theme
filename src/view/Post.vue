@@ -17,8 +17,24 @@
         {{ postDate }}
       </div>
     </header>
+    <ins
+      class="adsbygoogle"
+      style="display: block"
+      data-ad-client="ca-pub-4476478086515168"
+      data-ad-slot="3835723484"
+      data-ad-format="auto"
+      data-full-width-responsive="true"
+    ></ins>
     <main v-html="post.content.rendered" class="entry-content"></main>
     <RelatedPost :posts="post['jetpack-related-posts']" />
+    <ins
+      class="adsbygoogle"
+      style="display: block"
+      data-ad-client="ca-pub-4476478086515168"
+      data-ad-slot="3808813531"
+      data-ad-format="auto"
+      data-full-width-responsive="true"
+    ></ins>
     <Comment
       v-if="post && post.content.rendered.length"
       :comments="comment"
@@ -51,6 +67,8 @@ export default {
         },
       },
       comment: [],
+      googleInit: null,
+      googleAdId: "ca-pub-4476478086515168",
     };
   },
   computed: {
@@ -63,6 +81,17 @@ export default {
   },
   async created() {
     await this.init();
+  },
+  mounted() {
+    let timeout = 200;
+    if (this.timeout) timeout = this.timeout;
+    this.googleInit = setTimeout(() => {
+      if (typeof window !== "undefined")
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+    }, timeout);
+  },
+  destroyed() {
+    if (this.googleInit) clearTimeout(this.googleInit);
   },
   watch: {
     async $route() {
