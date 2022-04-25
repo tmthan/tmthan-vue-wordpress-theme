@@ -1,5 +1,5 @@
 <template>
-  <article class="entry">
+  <div class="entry">
     <Snipper v-if="!post.content.rendered.length" />
     <div class="entry-cover">
       <img
@@ -17,30 +17,24 @@
         {{ postDate }}
       </div>
     </header>
-    <ins
-      class="adsbygoogle"
-      style="display: block"
-      data-ad-client="ca-pub-4476478086515168"
-      data-ad-slot="3835723484"
-      data-ad-format="auto"
-      data-full-width-responsive="true"
-    ></ins>
-    <main v-html="post.content.rendered" class="entry-content"></main>
+    <article v-html="post.content.rendered" class="entry-content"></article>
+    <div class="ads">
+      <ins
+        class="adsbygoogle"
+        style="display: block"
+        data-ad-client="ca-pub-4476478086515168"
+        data-ad-slot="3808813531"
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      ></ins>
+    </div>
     <RelatedPost :posts="post['jetpack-related-posts']" />
-    <ins
-      class="adsbygoogle"
-      style="display: block"
-      data-ad-client="ca-pub-4476478086515168"
-      data-ad-slot="3808813531"
-      data-ad-format="auto"
-      data-full-width-responsive="true"
-    ></ins>
     <Comment
       v-if="post && post.content.rendered.length"
       :comments="comment"
       :postId="post.id"
     />
-  </article>
+  </div>
 </template>
 <script>
 import axios from "axios";
@@ -83,11 +77,12 @@ export default {
     await this.init();
   },
   mounted() {
-    let timeout = 200;
+    let timeout = 500;
     if (this.timeout) timeout = this.timeout;
     this.googleInit = setTimeout(() => {
       if (typeof window !== "undefined")
         (window.adsbygoogle = window.adsbygoogle || []).push({});
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
     }, timeout);
   },
   destroyed() {
@@ -95,9 +90,7 @@ export default {
   },
   watch: {
     async $route() {
-      // scroll to top
-      document.body.scrollTop = 0; // For Safari
-      document.documentElement.scrollTop = 0;
+      window.scrollTo({ top: 0, behavior: "smooth" });
       setTimeout(async () => {
         this.post.content.rendered = "";
         await this.init();
@@ -105,13 +98,14 @@ export default {
     },
   },
   methods: {
+    decodeHtml(html) {
+      var txt = document.createElement("textarea");
+      txt.innerHTML = html;
+      return txt.value;
+    },
     async init() {
       this.post = await this.getPost();
-      document.title =
-        this.post.title.rendered
-          .replace("&#8220;", '"')
-          .replace("&#8221;", '"')
-          .replace("&#38;", "&") + " thân";
+      document.title = this.decodeHtml(this.post.title.rendered) + " thân";
       if (this.post) {
         this.comment = await this.getComment(this.post.id);
       }
@@ -229,5 +223,11 @@ export default {
     left: 50%;
     transform: translateX(-50%);
   }
+}
+
+.ads {
+  max-width: 720px;
+  margin: 20px auto;
+  text-align: center;
 }
 </style>

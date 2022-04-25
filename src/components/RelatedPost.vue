@@ -3,7 +3,7 @@
     <div v-for="post in posts" :key="post.id" class="post-item">
       <router-link :to="postLink(post.url)">
         <img :src="post.img.src" />
-        <h3>{{ post.title }}</h3>
+        <h3 v-html="post.title"></h3>
         <p v-if="'' === post.img.src" class="post-description">
           {{ post.excerpt }}
         </p>
