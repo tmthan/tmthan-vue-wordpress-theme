@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    Make width
+    Made with
     <svg
       xmlns="http://www.w3.org/2000/svg"
       style="width: 24px; height: 24px; margin: 0 10px"
