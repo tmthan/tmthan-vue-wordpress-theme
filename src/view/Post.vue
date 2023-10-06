@@ -41,7 +41,7 @@ import axios from "axios";
 import Comment from "../components/Comment";
 import RelatedPost from "../components/RelatedPost";
 import Snipper from "../components/Spinner";
-import { config } from "../env/config";
+import { config, EXCLUDE_ADS } from "../env/config";
 
 export default {
   name: "Post",
@@ -79,11 +79,13 @@ export default {
   mounted() {
     let timeout = 500;
     if (this.timeout) timeout = this.timeout;
-    this.googleInit = setTimeout(() => {
+    if (!EXCLUDE_ADS.includes(location.pathname)) {
+      this.googleInit = setTimeout(() => {
       if (typeof window !== "undefined")
         (window.adsbygoogle = window.adsbygoogle || []).push({});
       (window.adsbygoogle = window.adsbygoogle || []).push({});
     }, timeout);
+    }
   },
   destroyed() {
     if (this.googleInit) clearTimeout(this.googleInit);
@@ -224,6 +226,19 @@ export default {
     transform: translateX(-50%);
   }
 }
+
+.entry .wp-block-quote {
+  padding: 25px  40px;
+  margin: 20px auto;
+  color: #ffffff;
+  border-radius: 24px;
+  background: linear-gradient(to right bottom, #edb9c9, #c5a5ec);
+}
+
+.entry .wp-block-quote p {
+  padding: 0;
+}
+
 
 .ads {
   max-width: 720px;
